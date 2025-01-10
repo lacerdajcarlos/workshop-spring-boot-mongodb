@@ -1,0 +1,36 @@
+version: '3.8'
+
+services:
+  maven:
+    image: maven:3.9.9-eclipse-temurin-17
+    container_name: maven-container
+    volumes:
+      - .:/app
+    working_dir: /app
+    command: mvn clean install
+
+  app:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    ports:
+      - "8080:8080"
+    depends_on:
+      - mongodb
+    environment:
+      SPRING_DATA_MONGODB_URI: mongodb://admin:admin123@mongodb:27017/workshop_mongo?authSource=admin
+
+  mongodb:
+    image: mongo:6.0
+    container_name: mongodb
+    environment:
+      MONGO_INITDB_ROOT_USERNAME: admin
+      MONGO_INITDB_ROOT_PASSWORD: admin123
+    ports:
+      - "27017:27017"
+    volumes:
+      - mongo-data:/data/db
+
+volumes:
+  mongo-data:
+
