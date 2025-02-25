@@ -18,14 +18,14 @@ services:
     depends_on:
       - mongodb
     environment:
-      SPRING_DATA_MONGODB_URI: mongodb://admin:admin123@mongodb:27017/workshop_mongo?authSource=admin
+      - SPRING_DATA_MONGODB_URI=mongodb://admin:admin123@mongodb:27017/workshop_mongo?authSource=admin
 
   mongodb:
     image: mongo:6.0
     container_name: mongodb
     environment:
-      MONGO_INITDB_ROOT_USERNAME: admin
-      MONGO_INITDB_ROOT_PASSWORD: admin123
+      - MONGO_INITDB_ROOT_USERNAME=admin
+      - MONGO_INITDB_ROOT_PASSWORD=admin123
     ports:
       - "27017:27017"
     volumes:

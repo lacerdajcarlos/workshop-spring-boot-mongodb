@@ -7,7 +7,7 @@ COPY pom.xml .
 RUN mvn dependency:go-offline
 
 # Copia o restante dos arquivos do projeto
-COPY src ./src
+COPY . .
 
 # Compila o projeto e gera o JAR
 RUN mvn package -DskipTests
@@ -20,7 +20,7 @@ FROM eclipse-temurin:17-jdk-alpine
 WORKDIR /app
 
 # Copia o JAR gerado para a imagem final
-COPY --from=build /app/target/workshopmongo-0.0.1-SNAPSHOT.jar app.jar
+COPY --from=build /app/target/*.jar app.jar
 
 # Expõe a porta 8080
 EXPOSE 8080
